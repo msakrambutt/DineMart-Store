@@ -59,7 +59,7 @@ const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 type ExtractVariables<T> = T extends { variables: object } ? T['variables'] : never;
 
 export async function shopifyFetch<T>({
-  cache = 'force-cache',
+  cache = 'no-store',
   headers,
   query,
   tags,
@@ -348,7 +348,8 @@ export async function getMenu(handle: string): Promise<Menu[]> {
   return (
     res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
       title: item.title,
-      path: item.url.replace(domain, '').replace('/collections', '/search').replace('/pages', '')
+      path: item.url.replace(domain, '')
+      // path: item.url.replace(domain, '').replace('/collections', '/search').replace('/pages', '')
     })) || []
   );
 }
